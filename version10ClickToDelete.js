@@ -164,3 +164,9 @@ var view = {
         return deleteButton;
     }
 };
+
+// create event listener on the ul to allow delete buttons to remo
+var todosUl = document.querySelector('ul');
+todosUl.addEventListener('click', function(event) {
+    console.log(event.target.parentNode.id);
+})
