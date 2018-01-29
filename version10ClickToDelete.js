@@ -149,8 +149,10 @@ var view = {
                 todoTextWithCompletion = '( ) ' + todo.todoText;
             }
             
+            //  making i equal to each item in the array
+            todoLi.id = i;
             todoLi.textContent = todoTextWithCompletion;
-            //append delete button to todo(LI)
+            //append delete button to todo(Li)
             todoLi.appendChild(this.createDeleteButton());
             todosUl.appendChild(todoLi);
         }
