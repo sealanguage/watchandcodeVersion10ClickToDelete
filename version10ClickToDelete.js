@@ -1,3 +1,10 @@
+/* global deleteTodoPositionInput     
+*/
+//  watchandcodeVersion10ClickToDelete - all but the last video of the section working. 
+//  The last code bits do not work from the last video here - deleteTodos function(position), and 
+//  the last line, handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+
+ 
 // adding objects instead of text to t o d o list
 //  Loops have 3 parts - initialization; condition; final-expression
 var todoList = {
@@ -107,10 +114,11 @@ var handlers = {
         changeTodoTextInput.value = "";
         view.displayTodos();    // every one of these handlers changes data so displaying it proves it was changed
     },
-    deleteTodo: function() {
-        var deleteTodoPositionInput = document.getElementById("deleteTodoPositionInput");
-        todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-        deleteTodoPositionInput.value = "";
+    deleteTodo: function(position) {
+        //var deleteTodoPositionInput = document.getElementById("deleteTodoPositionInput");
+        // todoList.deleteTodo(deleteTodoPosiitonInput.valueAsNumber);
+        todoList.deleteTodo(position);
+        //deleteTodoPositionInput.value = "";
         view.displayTodos();    // every one of these handlers changes data so displaying it proves it was changed
     },
     toggleCompleted: function() {
@@ -136,7 +144,7 @@ var view = {
                 // this is what we are trying to accomplish
                 // '(x)' todoText
                 // var todoTextWithCompletion = '';
-                //if todo.completed === true)
+                //if t odo.completed === true)
                     // (x) todoText
                 //else
                     // ( ) todoText
@@ -152,21 +160,35 @@ var view = {
             //  making i equal to each item in the array
             todoLi.id = i;
             todoLi.textContent = todoTextWithCompletion;
-            //append delete button to todo(Li)
+            //  append delete button to t odo(Li)
             todoLi.appendChild(this.createDeleteButton());
             todosUl.appendChild(todoLi);
         }
     },
     createDeleteButton: function() {
         var deleteButton = document.createElement('button');
-        deleteButton.textContent = "Delete";
+        deleteButton.textContent = 'Delete';
         deleteButton.className = 'deleteButton';
         return deleteButton;
+    },
+    //  this is event delegation, look for event on the parent object (ul) 
+    setUpEventListeners: function() {
+        //  create event listener on the ul to allow delete buttons to remo
+        //  putting event listener on ul and looking for which li delete button works on
+        var todosUl = document.querySelector('ul');
+        // function(event) is a callback function passes in an event object
+        todosUl.addEventListener('click', function(event) {
+            //console.log(event.target.parentNode.id);
+            // get element that was clicked on, event.target is the item clicked
+            var elementClicked = event.target;
+            //check if element clicked is a delete button
+            if (elementClicked.className === 'deleteButton');
+                //run handlers.deleteTodo
+                //parseInt turns string into number
+                handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+            
+        });   
     }
 };
 
-// create event listener on the ul to allow delete buttons to remo
-var todosUl = document.querySelector('ul');
-todosUl.addEventListener('click', function(event) {
-    console.log(event.target.parentNode.id);
-})
+view.setUpEventListeners();
